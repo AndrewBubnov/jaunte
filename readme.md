@@ -57,3 +57,4 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
     })
 )
 ```
+The code is published as https://www.npmjs.com/package/rtsm
