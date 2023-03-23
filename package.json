@@ -1,0 +1,32 @@
+{
+  "name": "tsmr",
+  "version": "1.0.0",
+  "description": "Simple state manager for React",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewBubnov/tsmr.git"
+  },
+  "keywords": [
+    "state",
+    "management",
+    "react",
+    "computed",
+    "state"
+  ],
+  "author": "Andrew Bubnov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrewBubnov/tsmr/issues"
+  },
+  "homepage": "https://github.com/AndrewBubnov/tsmr#readme",
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28"
+  }
+}
