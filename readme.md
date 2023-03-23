@@ -4,7 +4,7 @@ The package however able to manage computed values out of the box without any
 lack of performance.
 State management for React.
 
-Basic usage: create and export a hook, which is returned by 'create' function.
+Basic usage: create and export a hook, which is returned by `create` function.
 Pass to it the store creator function,
 which returns an object with data and actions.
 ```
@@ -26,7 +26,7 @@ or using selector function:
 
 `const coffee = useDrinkStore(store => store.coffee);`
 
-To get access to the computed value, 'create' function can take a second optional
+To get access to the computed value, `create` function can take a second optional
 argument - a function, getting the store and returning the computed value object:
 ```
 export const useDrinkStore = create<DrinkStore>((set) => ({
@@ -41,8 +41,8 @@ export const useDrinkStore = create<DrinkStore>((set) => ({
     })
 )
 ```
-And finally, to persist store values to browser local storage, first 'create' argument
-can be wrapped in 'persist' function, provided by package. Persist function takes the
+And finally, to persist store values to browser local storage, first `create` argument
+can be wrapped in `persist` function, provided by package. Persist function takes the
 store creator function and unique key for save:
 ```
 export const useDrinkStore = create<DrinkStore>(persist((set) => ({
