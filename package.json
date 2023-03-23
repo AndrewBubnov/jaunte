@@ -1,5 +1,5 @@
 {
-  "name": "tsmr",
+  "name": "rtsm",
   "version": "1.0.0",
   "description": "Simple state manager for React",
   "main": "index.ts",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndrewBubnov/tsmr.git"
+    "url": "git+https://github.com/AndrewBubnov/rtsm.git"
   },
   "keywords": [
     "state",
@@ -20,9 +20,9 @@
   "author": "Andrew Bubnov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AndrewBubnov/tsmr/issues"
+    "url": "https://github.com/AndrewBubnov/rtsm/issues"
   },
-  "homepage": "https://github.com/AndrewBubnov/tsmr#readme",
+  "homepage": "https://github.com/AndrewBubnov/rtsm#readme",
   "dependencies": {
     "react": "^18.2.0"
   },
