@@ -1,11 +1,11 @@
 {
-  "name": "photon",
+  "name": "jaunte",
   "version": "1.0.0",
   "description": "Simple state manager for React",
   "main": "index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndrewBubnov/photon.git"
+    "url": "git+https://github.com/AndrewBubnov/zippy.git"
   },
   "keywords": [
     "state",
@@ -17,9 +17,9 @@
   "author": "Andrew Bubnov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AndrewBubnov/photon/issues"
+    "url": "https://github.com/AndrewBubnov/jaunte/issues"
   },
-  "homepage": "https://github.com/AndrewBubnov/photon#readme",
+  "homepage": "https://github.com/AndrewBubnov/jaunte#readme",
   "dependencies": {
     "react": "^18.2.0"
   },
