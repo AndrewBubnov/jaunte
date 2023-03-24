@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Simple state manager for React",
   "main": "index.ts",
-  "scripts": {
-    "test": "test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AndrewBubnov/rtsm.git"

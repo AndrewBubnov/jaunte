@@ -12,7 +12,7 @@ import {
 
 const merge = (...args: object[]) => Object.assign({}, ...args);
 
-const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T => {
+const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T & T[keyof T] => {
     const [store, computed] = bound;
     const { getState, subscribe, persistKey } = store;
 
