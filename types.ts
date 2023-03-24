@@ -7,6 +7,7 @@ export type ComputedStoreCreator<T> = (arg: T) => Partial<T>;
 export type Bound<T> = [Store<T>, ComputedStoreCreator<T> | undefined];
 export type SubscribeCallback<T> = (arg: T) => void;
 export type Selector <T> = (arg: T) => T[keyof T];
+export type JObject = Record<string, unknown>;
 
 export interface Store<T> {
     getState: () => T;
