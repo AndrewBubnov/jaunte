@@ -1,11 +1,11 @@
 {
-  "name": "rtsm",
+  "name": "photon",
   "version": "1.0.0",
   "description": "Simple state manager for React",
   "main": "index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndrewBubnov/rtsm.git"
+    "url": "git+https://github.com/AndrewBubnov/photon.git"
   },
   "keywords": [
     "state",
@@ -17,9 +17,9 @@
   "author": "Andrew Bubnov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AndrewBubnov/rtsm/issues"
+    "url": "https://github.com/AndrewBubnov/photon/issues"
   },
-  "homepage": "https://github.com/AndrewBubnov/rtsm#readme",
+  "homepage": "https://github.com/AndrewBubnov/photon#readme",
   "dependencies": {
     "react": "^18.2.0"
   },
