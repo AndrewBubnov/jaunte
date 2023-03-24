@@ -10,6 +10,8 @@ import {
     SubscribeCallback
 } from "./types";
 
+const merge = (...args: object[]) => Object.assign({}, ...args);
+
 const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T => {
     const [store, computed] = bound;
     const { getState, subscribe, persistKey } = store;
@@ -17,7 +19,7 @@ const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T 
     if (persistKey) localStorage.setItem(persistKey, JSON.stringify(store.getState()));
 
     const snapshot = useSyncExternalStore(subscribe, getState);
-    const united = computed ? Object.assign({}, snapshot, computed(snapshot)) : snapshot;
+    const united = computed ? merge(snapshot, computed(snapshot)) : snapshot;
 
     return selector ? selector(united) as T : united;
 };
@@ -32,13 +34,13 @@ const createStore = <T extends object>(storeCreatorArg: StoreCreator<T>): Store<
     const setter = (setStateAction: SetStateAction<T>) => {
         const isFunction = typeof setStateAction === 'function';
         const updated = isFunction ? (setStateAction as FunctionalParam<T>)(store) : (setStateAction as ObjectParam<T>);
-        store = Object.assign({}, store, updated);
+        store = merge(store, updated);
         subscribers.forEach(callback => callback(store));
     };
 
     store = storeCreator(setter);
 
-    if (persistKey && persisted) store = Object.assign({}, store, persisted);
+    if (persistKey && persisted) store = merge(store, persisted);
 
     return {
         getState: () => store,
