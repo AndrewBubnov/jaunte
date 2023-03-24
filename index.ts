@@ -10,7 +10,7 @@ import {
     SubscribeCallback
 } from "./types";
 
-const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T | T[keyof T] => {
+const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T => {
     const [store, computed] = bound;
     const { getState, subscribe, persistKey } = store;
 
@@ -19,7 +19,7 @@ const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T 
     const snapshot = useSyncExternalStore(subscribe, getState);
     const united = computed ? Object.assign({}, snapshot, computed(snapshot)) : snapshot;
 
-    return selector ? selector(united) : united;
+    return selector ? selector(united) as T : united;
 };
 
 const createStore = <T extends object>(storeCreatorArg: StoreCreator<T>): Store<T> => {
