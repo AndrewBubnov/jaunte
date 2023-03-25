@@ -1,8 +1,7 @@
 Small and performant implementation of the React state management idea,
 inspired by well-known Zustand library (https://github.com/pmndrs/zustand).
-The package however able to manage computed values out of the box without any 
-lack of performance.
-State management for React.
+Jaunte, however, can also handle computed values out of the box with
+no performance loss.
 
 Basic usage: create and export a hook, which is returned by `create` function.
 Pass to it the store creator function,
@@ -57,4 +56,3 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
     })
 )
 ```
-https://www.npmjs.com/package/jaunte

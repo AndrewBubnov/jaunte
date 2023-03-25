@@ -1,18 +1,17 @@
 {
   "name": "jaunte",
   "version": "1.0.0",
-  "description": "Simple state manager for React",
+  "description": "Simple state handler for React",
   "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AndrewBubnov/jaunte.git"
   },
   "keywords": [
-    "state",
-    "management",
+    "state management",
     "react",
-    "computed",
-    "state"
+    "computed value",
+    "simple state"
   ],
   "author": "Andrew Bubnov",
   "license": "ISC",
