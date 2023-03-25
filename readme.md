@@ -43,8 +43,8 @@ export const useDrinkStore = create<DrinkStore>((set) => ({
 )
 ```
 And finally, to persist store values to browser local storage, first `create` argument
-can be wrapped in `persist` function, also provided by Jaunte. Persist function takes the
-store creator function and unique key for save:
+can be wrapped in `persist` function, also provided by Jaunte. The `persist` function takes
+the store creator and unique key to save and retrieve persisted store from local storage:
 ```
 export const useDrinkStore = create<DrinkStore>(persist((set) => ({
         tea: 1,
