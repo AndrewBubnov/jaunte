@@ -4,8 +4,8 @@ Jaunte, however, can also handle computed values out of the box with
 no performance loss.
 
 Basic usage: create and export a hook, which is returned by `create` function.
-Pass to it the store creator function,
-which returns an object with data and actions.
+Store creator function, which takes the built-in setter `set` and returns an object
+with data and actions.
 ```
 export const useDrinkStore = create<DrinkStore>(set => ({
     tea: 1,
@@ -17,16 +17,16 @@ export const useDrinkStore = create<DrinkStore>(set => ({
 ```
 
 You can than use this hook in React components, getting store content either using
-destructuring of all hook return:
+destructuring of the hook return value:
 
 `const { tea, coffee } = useDrinkStore();`
 
-or using selector function:
+or using selector function like:
 
 `const coffee = useDrinkStore(store => store.coffee);`
 
-To get access to the computed value, `create` function can take a second optional
-argument - a function, getting the store and returning the computed value object:
+To use a computed value, `create` function can take a second optional
+argument - a function, taking the store as argument and returning object with computed values:
 ```
 export const useDrinkStore = create<DrinkStore>((set) => ({
         tea: 1,
@@ -41,7 +41,7 @@ export const useDrinkStore = create<DrinkStore>((set) => ({
 )
 ```
 And finally, to persist store values to browser local storage, first `create` argument
-can be wrapped in `persist` function, provided by package. Persist function takes the
+can be wrapped in `persist` function, also provided by Jaunte. Persist function takes the
 store creator function and unique key for save:
 ```
 export const useDrinkStore = create<DrinkStore>(persist((set) => ({
@@ -56,3 +56,4 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
     })
 )
 ```
+Jaunte is built on Typescript, so can be used without additional type dev-dependencies. 
