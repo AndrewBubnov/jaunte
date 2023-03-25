@@ -5,7 +5,7 @@
   "main": "index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndrewBubnov/zippy.git"
+    "url": "git+https://github.com/AndrewBubnov/jaunte.git"
   },
   "keywords": [
     "state",
