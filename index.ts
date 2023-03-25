@@ -1,8 +1,8 @@
-import { useSyncExternalStore } from 'react';
+import {useDebugValue, useSyncExternalStore} from 'react';
 import {
     Bound,
     ComputedStoreCreator,
-    FunctionalParam, JObject, ObjectParam,
+    FunctionalParam, ObjectParam,
     Selector,
     SetStateAction, Store,
     StoreCreator,
@@ -10,21 +10,23 @@ import {
     SubscribeCallback
 } from "./types";
 
-const merge = (...args: JObject[]) => Object.assign({}, ...args);
+const merge = (...args: object[]) => Object.assign({}, ...args);
 
-const useStore = <T extends JObject>(bound: Bound<T>, selector?: Selector<T>): T & T[keyof T] => {
+const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T & T[keyof T] => {
     const [store, computed] = bound;
-    const { getState, subscribe, persistKey } = store;
+    const {getState, subscribe, persistKey} = store;
 
     if (persistKey) localStorage.setItem(persistKey, JSON.stringify(store.getState()));
 
     const snapshot = useSyncExternalStore(subscribe, getState);
     const united = computed ? merge(snapshot, computed(snapshot)) : snapshot;
 
-    return selector ? selector(united) as T : united;
+    const returnValue = selector ? selector(united) : united;
+    useDebugValue(returnValue);
+    return returnValue;
 };
 
-const createStore = <T extends JObject>(storeCreatorArg: StoreCreator<T>): Store<T> => {
+const createStore = <T extends object>(storeCreatorArg: StoreCreator<T>): Store<T> => {
     const [storeCreator, persistKey, persisted] = Array.isArray(storeCreatorArg) ? storeCreatorArg : [storeCreatorArg];
 
     let store = {} as T;
@@ -52,13 +54,13 @@ const createStore = <T extends JObject>(storeCreatorArg: StoreCreator<T>): Store
     };
 };
 
-export const create = <T extends JObject>(storeCreator: StoreCreator<T>, computed?: ComputedStoreCreator<T>) => {
+export const create = <T extends object>(storeCreator: StoreCreator<T>, computed?: ComputedStoreCreator<T>) => {
     const store = createStore(storeCreator);
     const hook = (bound: Bound<T>, selector?: Selector<T>) => useStore(bound, selector);
     return hook.bind(null, [store, computed]);
 };
 
-export const persist = <T extends JObject>(
+export const persist = <T extends object>(
     storeCreator: StoreCreatorItem<T>,
     name: string
 ): [StoreCreatorItem<T>, string, T] => {
