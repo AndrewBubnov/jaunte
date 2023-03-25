@@ -1,5 +1,5 @@
 Small and performant implementation of the React state management idea,
-inspired by well-known Zustand library (https://github.com/pmndrs/zustand).
+inspired by well-known Zustand library (https://github.com/pmndrs/zustand) approach.
 Jaunte, however, can also handle computed values out of the box with
 no performance loss.
 
