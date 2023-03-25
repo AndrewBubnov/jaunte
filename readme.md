@@ -1,6 +1,6 @@
 Small and performant implementation of the React state management idea,
 inspired by well-known Zustand library (https://github.com/pmndrs/zustand) approach.
-Jaunte, however, can also handle computed values out of the box with
+Jaunte, however, can also easily handle computed values out of the box with
 no performance loss.
 
 Basic usage: create and export a hook, which is returned by `create` function.
@@ -24,6 +24,8 @@ destructuring of the hook return value:
 or using selector function like:
 
 `const coffee = useDrinkStore(store => store.coffee);`
+
+You can create as many stores as you need to separate data and logic.
 
 To use a computed value, `create` function can take a second optional
 argument - a function, taking the store as argument and returning object with computed values:
@@ -50,7 +52,7 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
         moreTea: () => set((state) => ({tea: state.tea + 1})),
         removeTea: () => set({ tea: 0 }),
         moreCoffee: () => set((state) => ({coffee: state.coffee + 1})),
-    }), 'animals'),
+    }), 'drinks'),
         (state) => ({
         allDrinks: state.tea + state.coffee,
     })
