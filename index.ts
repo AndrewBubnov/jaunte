@@ -12,6 +12,13 @@ import {
 
 const merge = (...args: object[]) => Object.assign({}, ...args);
 
+const extractData = <T extends object>(debugValue: T) => (Object.keys(debugValue) as Array<keyof T>)
+    .filter(key => typeof debugValue[key] !== 'function')
+    .reduce((acc,cur) => {
+        acc[cur] = debugValue[cur];
+        return acc;
+    }, {} as T);
+
 const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T & T[keyof T] => {
     const [store, computed] = bound;
     const {getState, subscribe, persistKey} = store;
@@ -22,7 +29,7 @@ const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T 
     const united = computed ? merge(snapshot, computed(snapshot)) : snapshot;
 
     const returnValue = selector ? selector(united) : united;
-    useDebugValue(returnValue);
+    useDebugValue(returnValue, extractData);
     return returnValue;
 };
 

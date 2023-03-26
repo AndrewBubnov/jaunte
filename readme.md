@@ -58,4 +58,7 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
     })
 )
 ```
-Jaunte is built on Typescript, so can be used without additional type dev-dependencies. 
+Jaunte is built on Typescript, so can be used without additional type dev-dependencies.
+
+Jaunte store values, including computed, can be easily debugged using React dev tool in
+Components tab, under the `hook` label.
