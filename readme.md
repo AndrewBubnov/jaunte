@@ -62,4 +62,5 @@ Jaunte is built on Typescript, so can be used without additional type dev-depend
 
 Jaunte store values, including computed, can be easily debugged using React dev tool in
 Components tab, under the `hook` label.
+
 https://www.npmjs.com/package/jaunte
