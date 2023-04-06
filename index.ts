@@ -63,7 +63,6 @@ const createStore = <T extends object>(storeCreatorArg: StoreCreator<T>): Store<
 
 export const create = <T extends object>(storeCreator: StoreCreator<T>, computed?: ComputedStoreCreator<T>) => {
     const store = createStore(storeCreator);
-    // eslint-disable-next-line
     const hook = (bound: Bound<T>, selector?: Selector<T>) => useStore(bound, selector);
     return hook.bind(null, [store, computed]);
 };
