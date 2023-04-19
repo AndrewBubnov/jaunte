@@ -2,7 +2,7 @@ import {useDebugValue, useSyncExternalStore} from 'react';
 import {
     Bound,
     ComputedStoreCreator,
-    FunctionalParam, ObjectParam,
+    FunctionalParam, HookReturnType, ObjectParam,
     Selector,
     SetStateAction, Store,
     StoreCreator,
@@ -19,7 +19,7 @@ const extractData = <T extends object>(debugValue: T) => (Object.keys(debugValue
         return acc;
     }, {} as T);
 
-const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): T & T[keyof T] => {
+const useStore = <T extends object>(bound: Bound<T>, selector?: Selector<T>): HookReturnType<T> => {
     const [store, computed] = bound;
     const {getState, subscribe, persistKey} = store;
 
