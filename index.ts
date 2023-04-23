@@ -19,7 +19,7 @@ const useStore = <T, S extends T = T>(store: Store<T>, selector?: (state: T) => 
 
     if (persistKey) localStorage.setItem(persistKey, JSON.stringify(store.getState()));
     const getSnapshot = selector ? () => selector(getState()) : getState;
-    return useSyncExternalStore(subscribe, getSnapshot) as object;
+    return useSyncExternalStore(subscribe, getSnapshot);
 };
 
 const useComputedStore = <T, S extends T = T>(bound: Bound<T>, selector?: (state: Partial<T>) => S) => {
