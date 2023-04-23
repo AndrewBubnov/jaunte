@@ -1,38 +1,33 @@
-import {useDebugValue, useSyncExternalStore} from 'react';
+import { useSyncExternalStore } from 'react';
 import {
     Bound,
-    ComputedStoreCreator,
-    Create,
+    ComputedStoreCreator, CreateSimple,
+    CreateWithComputed,
     FunctionalParam,
     ObjectParam,
     SetStateAction,
     Store,
     StoreCreator,
     StoreCreatorItem,
-    SubscribeCallback
+    SubscribeCallback, UseStore
 } from "./types";
 
 const merge = (...args: object[]) => Object.assign({}, ...args);
 
-const extractData = <T extends object>(debugValue: T) => (Object.keys(debugValue) as Array<keyof T>)
-    .filter(key => typeof debugValue[key] !== 'function')
-    .reduce((acc,cur) => {
-        acc[cur] = debugValue[cur];
-        return acc;
-    }, {} as T);
-
-const useStore = <T, S = T>(bound: Bound<T>, selector?: (state: T) => S) => {
-    const [store, computed] = bound;
+const useStore = <T, S extends T = T>(store: Store<T>, selector?: (state: T) => S) => {
     const { getState, subscribe, persistKey } = store;
 
     if (persistKey) localStorage.setItem(persistKey, JSON.stringify(store.getState()));
+    const getSnapshot = selector ? () => selector(getState()) : getState;
+    return useSyncExternalStore(subscribe, getSnapshot) as object;
+};
 
-    const snapshot = useSyncExternalStore(subscribe, getState);
-    const united = computed ? merge(snapshot as object, computed(snapshot)) : snapshot;
+const useComputedStore = <T, S extends T = T>(bound: Bound<T>, selector?: (state: Partial<T>) => S) => {
+    const [store, computed] = bound;
+    const { getState } = store;
 
-    const returnValue = selector ? selector(united) : united;
-    useDebugValue(returnValue, extractData);
-    return returnValue;
+    const computedState = computed(getState());
+    return selector ? selector(computedState) : computedState;
 };
 
 const createStore = <T>(storeCreatorArg: StoreCreator<T>): Store<T> => {
@@ -63,11 +58,29 @@ const createStore = <T>(storeCreatorArg: StoreCreator<T>): Store<T> => {
     };
 };
 
-export const create = (<T, S extends T>(storeCreator: StoreCreator<T, S>, computed?: ComputedStoreCreator<T>) => {
+const createSimple = (<T, S extends T>(storeCreator: StoreCreator<T, S>) => {
     const store = createStore(storeCreator);
-    const hook = (bound: Bound<T>, selector?: (state: T) => S) => useStore(bound, selector);
-    return hook.bind(null, [store, computed]);
-}) as Create;
+    const hook = (store: Store<T>, selector?: (state: T) => S) => useStore(store, selector);
+    return hook.bind(null, store);
+}) as CreateSimple;
+
+const createWithComputed = (<T, S extends T>(storeCreator: StoreCreator<T, S>, computed: ComputedStoreCreator<T>) => {
+    const store = createStore(storeCreator);
+    const hook = (store: Store<T>, selector?: (state: T) => S) => useStore(store, selector);
+    const computedHook = (bound: Bound<T>, selector?: (state: Partial<T>) => S) => useComputedStore(bound, selector);
+    return [hook.bind(null, store), computedHook.bind(null, [store, computed])];
+}) as CreateWithComputed;
+
+export function create<T, S extends T = T>(storeCreator: StoreCreator<T, S>): UseStore<Store<T>>;
+export function create<T, S extends T = T>(
+    storeCreator: StoreCreator<T, S>,
+    computed: ComputedStoreCreator<T>
+): [UseStore<Store<T>>, UseStore<Store<T>>];
+
+export function create<T, S extends T>(storeCreator: StoreCreator<T, S>, computed?: ComputedStoreCreator<T>) {
+    if (computed) return createWithComputed(storeCreator, computed);
+    return createSimple(storeCreator);
+}
 
 export const persist = <T, U>(
     storeCreator: StoreCreatorItem<T, U>,
