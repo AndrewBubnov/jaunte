@@ -1,7 +1,5 @@
-import {useDebugValue, useSyncExternalStore} from 'react';
+import { useSyncExternalStore } from 'react';
 import {
-    Bound,
-    ComputedStoreCreator,
     Create,
     FunctionalParam,
     ObjectParam,
@@ -14,25 +12,13 @@ import {
 
 const merge = (...args: object[]) => Object.assign({}, ...args);
 
-const extractData = <T extends object>(debugValue: T) => (Object.keys(debugValue) as Array<keyof T>)
-    .filter(key => typeof debugValue[key] !== 'function')
-    .reduce((acc,cur) => {
-        acc[cur] = debugValue[cur];
-        return acc;
-    }, {} as T);
-
-const useStore = <T, S = T>(bound: Bound<T>, selector?: (state: T) => S) => {
-    const [store, computed] = bound;
+const useStore = <T, S extends T = T>(store: Store<T>, selector?: (state: T) => S) => {
     const { getState, subscribe, persistKey } = store;
 
     if (persistKey) localStorage.setItem(persistKey, JSON.stringify(store.getState()));
+    const getSnapshot = selector ? () => selector(getState()) : getState;
 
-    const snapshot = useSyncExternalStore(subscribe, getState);
-    const united = computed ? merge(snapshot as object, computed(snapshot)) : snapshot;
-
-    const returnValue = selector ? selector(united) : united;
-    useDebugValue(returnValue, extractData);
-    return returnValue;
+    return useSyncExternalStore(subscribe, getSnapshot);
 };
 
 const createStore = <T>(storeCreatorArg: StoreCreator<T>): Store<T> => {
@@ -63,10 +49,10 @@ const createStore = <T>(storeCreatorArg: StoreCreator<T>): Store<T> => {
     };
 };
 
-export const create = (<T, S extends T>(storeCreator: StoreCreator<T, S>, computed?: ComputedStoreCreator<T>) => {
+export const create = (<T, S extends T>(storeCreator: StoreCreator<T, S>) => {
     const store = createStore(storeCreator);
-    const hook = (bound: Bound<T>, selector?: (state: T) => S) => useStore(bound, selector);
-    return hook.bind(null, [store, computed]);
+    const hook = (store: Store<T>, selector?: (state: T) => S) => useStore(store, selector);
+    return hook.bind(null, store);
 }) as Create;
 
 export const persist = <T, U>(

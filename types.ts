@@ -4,17 +4,13 @@ export type FunctionalParam<S> = (arg: S) => Partial<S>;
 export type SetStateAction<S> = ObjectParam<S> | FunctionalParam<S>;
 export type StoreCreatorItem<T, U> = (set: (action: SetStateAction<T>) => void) => U;
 export type StoreCreator<T, U = T> = StoreCreatorItem<T, U> | [StoreCreatorItem<T, U>, string, T];
-export type ComputedStoreCreator<T> = (arg: T) => Partial<T>;
-export type Bound<T> = [Store<T>, ComputedStoreCreator<T> | undefined];
 export type SubscribeCallback<T> = (arg: T) => void;
 export type Inferred<S> = S extends { getState: () => infer T } ? T : never;
 export type UseStore<T extends Store<unknown>> = {
     (): Inferred<T>;
     <S>(selector?: Selector<T, S>): S;
 } & T;
-export type Create = {
-    <T>(creator: StoreCreator<T>, computed?: ComputedStoreCreator<T>): UseStore<Store<T>>;
-};
+export type Create = { <T>(creator: StoreCreator<T>): UseStore<Store<T>> };
 
 export interface Store<T> {
     getState: () => T;
