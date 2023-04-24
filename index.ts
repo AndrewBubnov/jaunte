@@ -12,7 +12,7 @@ export function create<T, S extends T = T>(storeCreator: StoreCreator<T, S>): Us
 export function create<T, U = never, S extends T = T>(
     storeCreator: StoreCreator<T, S>,
     computed: ComputedStoreCreator<T, U>
-): [UseStore<Store<T>>, UseStore<Store<U>>];
+): UseStore<Store<T & U>>;
 
 export function create<T, U = never, S extends T = T>(
     storeCreator: StoreCreator<T, S>,

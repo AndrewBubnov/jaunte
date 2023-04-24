@@ -17,7 +17,7 @@ export type CreateSimple = {
     <T>(creator: StoreCreator<T>): UseStore<Store<T>>;
 };
 export type CreateWithComputed = {
-    <T, S>(creator: StoreCreator<T>, computed?: ComputedStoreCreator<T, S>): [UseStore<Store<T>>, UseStore<Store<S>>];
+    <T, S>(creator: StoreCreator<T>, computed?: ComputedStoreCreator<T, S>): UseStore<Store<T & S>>;
 };
 
 export interface Store<T> {
