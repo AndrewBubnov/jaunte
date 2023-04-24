@@ -1,9 +1,10 @@
 Small and performant implementation of the React state management idea,
 inspired by well-known Zustand library (https://github.com/pmndrs/zustand) approach.
+Jaunte, however, easily handles computed values of the box, if needed.
 
 Basic usage: create and export a hook, which is returned by `create` function.
 Store creator function, which takes the built-in setter `set` and returns an object
-with data and actions. Async actions are handled in the same way as synchronous.
+with data and actions. Both sync and async actions are handled in the same way.
 ```
 export const useDrinkStore = create<DrinkStore>(set => ({
     tea: 1,
@@ -27,6 +28,9 @@ or using selector function like:
 
 `const coffee = useDrinkStore(store => store.coffee);`
 
+In case of using selector functions to derive data from store, only this specific component
+(and components, getting computed values) re-rendered, so this way is preferred in performance
+context.
 You can create as many stores as you need to separate data and logic.
 
 And finally, to persist store values to browser local storage, first `create` argument
@@ -45,9 +49,6 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
     })
 )
 ```
-Optional functionality, isn't necessarily worth to be implemented - is in 
-a branch `usecomputed_overload`:
-
 To handle a computed value, `create` function can take a second optional
 argument - a function, taking the store as argument and returning object with computed values:
 ```
@@ -63,7 +64,7 @@ interface Computed {
     allDrinks: number;
 }
 
-export const [useDrinkStore, useComputed] = create<DrinkStore, Computed>((set) => ({
+export const useDrinkStore = create<DrinkStore, Computed>((set) => ({
         tea: 1,
         coffee: 12,
         moreTea: () => set((state) => ({tea: state.tea + 1})),
@@ -76,4 +77,4 @@ export const [useDrinkStore, useComputed] = create<DrinkStore, Computed>((set) =
 )
 ```
 In that case `create` function consumes two types for store and computed values
-respectively and returns a tuple with hooks that return corresponding data.
+respectively.
