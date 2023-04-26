@@ -78,3 +78,5 @@ export const useDrinkStore = create<DrinkStore, Computed>((set) => ({
 ```
 In that case `create` function consumes two types for store and computed values
 respectively.
+
+https://www.npmjs.com/package/jaunte
