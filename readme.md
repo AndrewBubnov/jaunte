@@ -1,6 +1,6 @@
 Small and performant implementation of the React state management idea,
 inspired by well-known Zustand library (https://github.com/pmndrs/zustand) approach.
-Jaunte, however, easily handles computed values of the box, if needed.
+Jaunte, however, easily handles computed values out of the box, if needed.
 
 Basic usage: create and export a hook, which is returned by `create` function.
 Store creator function, which takes the built-in setter `set` and returns an object
