@@ -17,14 +17,14 @@ export const createStore = <T, U>(storeCreatorArg: StoreCreator<T>, computed?: C
     const setter = (setStateAction: SetStateAction<T>) => {
         const isFunction = typeof setStateAction === 'function';
         const updated = isFunction ? (setStateAction as FunctionalParam<T>)(store) : (setStateAction as ObjectParam<T>);
-        store = merge(store as object, updated);
+        store = merge(store, updated);
         if (computed) store = mergeComputed(store, computed);
         subscribers.forEach(callback => callback(store));
     };
 
     store = computed ? mergeComputed(storeCreator(setter), computed) : storeCreator(setter);
 
-    if (persistKey && persisted) store = merge(store as object, persisted);
+    if (persistKey && persisted) store = merge(store, persisted);
 
     return {
         getState: () => store,
