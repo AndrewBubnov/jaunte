@@ -11,6 +11,9 @@ To create the type for computed values, which is passed to `create` function, us
 type, also provided by Jaunte. This type consumes two parameters: basic store type and type for computed
 values type designation.
 ```
+import { Computed, create } from 'jaunte';
+
+
 interface DrinkStore {
 	tea: number;
 	coffee: number;
