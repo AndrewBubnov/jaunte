@@ -36,5 +36,3 @@ export const useDrinkStore = create<DrinkStore, Computed<DrinkStore, ComputedDri
 	}
 )
 ```
-
-https://www.npmjs.com/package/jaunte
