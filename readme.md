@@ -2,7 +2,8 @@ Small and performant implementation of the React state management idea,
 inspired by well-known Zustand library (https://github.com/pmndrs/zustand) approach.
 Jaunte, however, easily handles computed values out of the box, if needed.
 
-Basic usage: create and export a hook, which is returned by `create` function.
+**Basic usage**
+Create and export a hook, which is returned by `create` function.
 Store creator function, which takes the built-in setter `set` and returns an object
 with data and actions. Both sync and async actions are handled in the same way.
 ```
@@ -49,6 +50,7 @@ export const useDrinkStore = create<DrinkStore>(persist((set) => ({
     })
 )
 ```
+**Computed values**
 To handle a computed value, `create` function can take a second optional
 argument - a function, taking the store as argument and returning object with computed values:
 ```
